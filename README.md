@@ -1,16 +1,12 @@
 # flutter_net_demo
 
-A new Flutter application.
+一个简单的flutter dio的封装, 包括: 日志打印, 网络进度, 返回json转bean, get post upload方法的封装, 简易可直接运行的demo
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Clone & Run main.dart
+网络相关代码在net目录, 直接复制即可使用
 
-A few resources to get you started if this is your first Flutter project:
+## How to get bean
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+复制json字符串, 粘贴到[json to dart](https://javiercbk.github.io/json_to_dart/)的输入框, 点击Generate Dart之后就出现相应的Bean类, 粘贴到工程后再重命名
