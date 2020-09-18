@@ -1,16 +1,16 @@
 
 library basicnetservice;
-export 'package:flutter_net_demo/net/NetService/net_service.dart';
+export 'package:flutter_net_demo/net/service/net_service.dart';
 import 'dart:io';
 
 import 'package:flutter/widgets.dart';
-import 'package:flutter_net_demo/net/NetService/net_service.dart';
+import 'package:flutter_net_demo/net/service/net_service.dart';
 import 'package:flutter_net_demo/widget/dialog_param.dart';
 import 'package:flutter_net_demo/widget/loading_dialog.dart';
 
-class BasicNetService extends NetService {
+class AppNetService extends NetService {
 
-  BasicNetService();
+  AppNetService();
 
   @override
   request(String url, {Method method, Map<String, dynamic> params, var file, String fileName,String fileSavePath, BuildContext context, bool showLoad = false}) async {

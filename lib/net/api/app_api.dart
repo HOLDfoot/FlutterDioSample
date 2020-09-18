@@ -1,12 +1,12 @@
 library basicnetservice;
-export 'package:flutter_net_demo/net/NetService/net_service.dart';
+export 'package:flutter_net_demo/net/service/net_service.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_net_demo/net/NetService/net_service.dart';
+import 'package:flutter_net_demo/net/service/net_service.dart';
 
-import 'basic_net_service.dart';
+import 'app_net_service.dart';
 
 
-class AppApi extends BasicNetService {
+class AppApi extends AppNetService {
 
   /// 获取天气的接口
   static const String _GET_WEATHER = "/";
