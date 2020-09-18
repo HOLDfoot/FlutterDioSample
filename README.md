@@ -1,4 +1,7 @@
-# flutter_net_demo
+# 采用的是Dio的3.x版本
+目前基本功能可以使用, 未经过全面的应用和测试
+
+# flutter_net_demo 
 
 一个简单的flutter dio的封装, 包括: 日志打印, 网络进度, 返回json转bean, get post upload方法的封装, 简易可直接运行的demo
 
