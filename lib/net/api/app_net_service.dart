@@ -5,8 +5,8 @@ import 'dart:io';
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_net_demo/net/service/net_service.dart';
-import 'package:flutter_net_demo/widget/dialog_param.dart';
-import 'package:flutter_net_demo/widget/loading_dialog.dart';
+import 'package:flutter_net_demo/net/widget/dialog_param.dart';
+import 'package:flutter_net_demo/net/widget/loading_dialog.dart';
 
 class AppNetService extends NetService {
 

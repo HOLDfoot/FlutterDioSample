@@ -18,7 +18,7 @@ class DioInstance {
           connectTimeout:15000,
           receiveTimeout:15000,
           responseType: ResponseType.plain,
-          contentType: "application/json; charset=utf-8;"
+          //contentType: "application/json; charset=utf-8;"
           //contentType: ContentType(CONTENT_TYPE_PRIMARY, CONTENT_TYPE_JSON,charset: CONTENT_CHART_SET)
       );
       _instance = new Dio(options);
