@@ -2,11 +2,12 @@ library msnetservice;
 
 export 'result_data.dart';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_net_demo/net/api/net_config.dart';
 import 'result_data.dart';
-import 'session_manager.dart';
+import 'dio_instance.dart';
 import 'package:flutter/material.dart';
 
 enum Method {
@@ -45,7 +46,7 @@ class NetService {
 
   /// 附件上传
   upLoad(
-    var file,
+    File file,
     String fileName,
     String url, {
     Map<String, dynamic> params,
@@ -63,7 +64,7 @@ class NetService {
   request(String url,
       {Method method,
       Map<String, dynamic> params,
-      var file,
+      File file,
       String fileName,
       String fileSavePath,
       BuildContext context,
@@ -71,46 +72,45 @@ class NetService {
     try {
       Response response;
 
-      SessionManager sessionManager = SessionManager();
+      Dio dioInstance = DioInstance.createInstance();
       var headers = await getHeaders();
       if (headers != null) {
-        sessionManager.options.headers = headers;
+        dioInstance.options.headers = headers;
       }
       var baseUrl = await getBasicUrl();
-      sessionManager.options.baseUrl = baseUrl;
+      dioInstance.options.baseUrl = baseUrl;
 
       // 打印网络日志
-      StringBuffer requestParam = new StringBuffer();
-      requestParam.write("$_TAG ");
-      requestParam.write("Url:");
-      requestParam.write(baseUrl);
-      requestParam.write(url);
-      requestParam.write("\n");
-      requestParam.write("$_TAG ");
-      requestParam.write("params:");
-      requestParam.write(json.encode(params));
-      printLog(requestParam.toString());
+      StringBuffer requestParamLog = new StringBuffer();
+      requestParamLog.write("$_TAG ");
+      requestParamLog.write("Url:");
+      requestParamLog.write(baseUrl);
+      requestParamLog.write(url);
+      requestParamLog.write("\n");
+      requestParamLog.write("$_TAG ");
+      requestParamLog.write("params:");
+      requestParamLog.write(json.encode(params));
+      printLog(requestParamLog.toString());
+
 
       switch (method) {
         case Method.GET:
-          response = await sessionManager.get(url, queryParameters: params);
+          response = await dioInstance.get(url, queryParameters: params);
           break;
         case Method.POST:
-          response = await sessionManager.post(url, data: params);
+          response = await dioInstance.post(url, data: params, options: Options(contentType: "application/x-www-form-urlencoded"));
           break;
         case Method.UPLOAD:
           {
-            FormData formData = new FormData();
-            if (params != null) {
-              formData = FormData.from(params);
-            }
-            formData.add(
-                fileName, UploadFileInfo.fromBytes(file, fileName)); /// 第一个fileName是参数名, 必须和接口一致, 第二个fileName是文件的文件名
-            response = await sessionManager.post(url, data: formData);
+            FormData formData;
+            /// files是参数名, 必须和接口一致, fileName是文件的文件名
+            params["files"]  = await MultipartFile.fromFile(file.path, filename: fileName);
+            formData = FormData.fromMap(params);
+            response = await dioInstance.post(url, data: formData);
             break;
           }
         case Method.DOWNLOAD:
-          response = await sessionManager.download(url, fileSavePath);
+          response = await dioInstance.download(url, fileSavePath);
           break;
       }
       return await handleDataSource(response, method, url: url);
@@ -125,10 +125,11 @@ class NetService {
     ResultData resultData;
     String errorMsg = "";
     int statusCode;
+    const HTTP_OK = 200;
     statusCode = response.statusCode;
     printLog("$_TAG statusCode:" + statusCode.toString());
     if (method == Method.DOWNLOAD) {
-      if (statusCode == 200) {
+      if (statusCode == HTTP_OK) {
         /// 下载成功
         resultData = ResultData('下载成功', true);
       } else {
@@ -147,7 +148,7 @@ class NetService {
       }
 
       //处理错误部分
-      if (statusCode != 200) {
+      if (statusCode != HTTP_OK) {
         errorMsg = "网络请求错误,状态码:" + statusCode.toString();
         resultData = ResultData(errorMsg, false, url: url);
       } else {

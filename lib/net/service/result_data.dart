@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_net_demo/net/api/net_config.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
 class ResultData {
   Map<String, dynamic> response; // 所有返回值
   dynamic data; // 请求回来的data, 可能是list也可能是map
-  String code; // 服务器的状态码
+  var code; // 服务器的状态码
   String msg; // 服务器给的提示信息
   /// true 请求成功 false 请求失败
   bool result = true; // 客户端是否请求成功false: HTTP错误
@@ -20,10 +19,7 @@ class ResultData {
   }
 
   bool isFail() {
-    bool success = result && code == "1";
-    if (!success) {
-      mDebugPrint("Not success for $url:$result,code:$code,msg:$msg");
-    }
+    bool success = isSuccess();
     return !success;
   }
 

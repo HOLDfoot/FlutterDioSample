@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_net_demo/widget/dialog_param.dart';
+import 'package:flutter_net_demo/net/widget/dialog_param.dart';
 
+// 显示无文字圆形进度对话框, 可以配置对话框是否有白色背景
 // ignore: must_be_immutable
 class LoadingDialog extends Dialog {
   String text;
@@ -13,7 +14,7 @@ class LoadingDialog extends Dialog {
   @override
   Widget build(BuildContext context) {
     this.context = context;
-    this.showParam.context = context;
+    showParam.judgeNeedPop(context);
     return new Material(
       //创建透明层
       type: MaterialType.transparency, //透明类型
@@ -71,6 +72,7 @@ class LoadingDialog extends Dialog {
   }
 }
 
+/// 显示有文本的圆形进度的对话框
 class LoadingTextDialog extends Dialog {
   final String text;
   final ShowParam showParam;
@@ -81,6 +83,7 @@ class LoadingTextDialog extends Dialog {
   @override
   Widget build(BuildContext context) {
     this.showParam.context = context;
+    showParam.judgeNeedPop(context);
     return new Material(
       //创建透明层
       type: MaterialType.transparency, //透明类型
@@ -147,6 +150,7 @@ class LoadingTextDialog extends Dialog {
   }
 }
 
+/// 用于显示对话框的入口工具类, 强制使用该方法调用对话框, 而不是使用具体对话框对象
 class LoadingDialogUtil {
   static Future<void> showLoadingDialog(BuildContext context, ShowParam param) {
     bool show = param?.show;
@@ -194,4 +198,5 @@ class LoadingDialogUtil {
           );
         });
   }
+
 }
