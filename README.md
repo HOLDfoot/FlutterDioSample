@@ -1,5 +1,13 @@
 # 采用的是Dio的3.x版本
-目前基本功能可以使用, 未经过全面的应用和测试
+
+包括get/post方法的使用, get方法可以直接在APP里运行, 
+包括文件上传的使用方法, 文件上传接口的参数key是"files", 已经在net_service.dart文件中硬编码
+
+# Dio的2.x版本的FlutterDioSample放在dio_2x分支上
+链接:
+[FlutterDioSample on dio_2x](https://github.com/HOLDfoot/FlutterDioSample/tree/dio_3x)
+该版本不再维护
+
 
 # flutter_net_demo 
 
@@ -12,7 +20,7 @@ Clone & Run main.dart
 
 ## How to get bean
 
-复制json字符串, 粘贴到[json to dart](https://javiercbk.github.io/json_to_dart/)的输入框, 点击Generate Dart之后就出现相应的Bean类, 粘贴到工程后再重命名
+复制json字符串, 通过安装在IDE上的flutter插件"JsonToDartClass"生成工程中类似的WeatherBean
 
 ## How to use
 ### Config Common Params in basic_net_service.dart
